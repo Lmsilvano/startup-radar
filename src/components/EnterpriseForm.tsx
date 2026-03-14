@@ -1,7 +1,8 @@
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { enterpriseSchema, Enterprise, Segment } from "@/types/enterprise";
-import { X, Save, AlertCircle, Info, MapPin, Search } from "lucide-react";
+import { X, Save, AlertCircle, Info, MapPin } from "lucide-react";
+import { DatePicker } from "@/components/DatePicker";
 import { cn } from "@/lib/utils";
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -22,6 +23,7 @@ export function EnterpriseForm({ initialData, isOpen, onClose, onSubmit, isSubmi
         reset,
         watch,
         setValue,
+        control,
         formState: { errors },
     } = useForm<Enterprise>({
         resolver: zodResolver(enterpriseSchema),
@@ -272,12 +274,17 @@ export function EnterpriseForm({ initialData, isOpen, onClose, onSubmit, isSubmi
                                     <FormField label="Website" error={errors.website?.message}>
                                         <input {...register("website")} className={formInputClass} placeholder="https://..." />
                                     </FormField>
-                                    <FormField label="Ano de Fundação">
-                                        <input
-                                            type="number"
-                                            {...register("foundationYear", { valueAsNumber: true })}
-                                            className={formInputClass}
-                                            placeholder="2024"
+                                    <FormField label="Data de Fundação">
+                                        <Controller
+                                            name="foundationDate"
+                                            control={control}
+                                            render={({ field }) => (
+                                                <DatePicker
+                                                    value={field.value}
+                                                    onChange={field.onChange}
+                                                    placeholder="DD/MM/AAAA"
+                                                />
+                                            )}
                                         />
                                     </FormField>
                                 </div>

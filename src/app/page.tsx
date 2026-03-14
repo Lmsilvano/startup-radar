@@ -12,6 +12,7 @@ import { Dashboard } from '@/components/Dashboard';
 import { Filters } from '@/components/Filters';
 import { EnterpriseTable } from '@/components/EnterpriseTable';
 import { EnterpriseForm } from '@/components/EnterpriseForm';
+import { ConfirmModal } from '@/components/ConfirmModal';
 import { motion } from 'framer-motion';
 
 export default function Home() {
@@ -24,6 +25,8 @@ export default function Home() {
     // UI State
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [editingEnterprise, setEditingEnterprise] = useState<Enterprise | null>(null);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [enterpriseToDelete, setEnterpriseToDelete] = useState<string | null>(null);
 
     const [filters, setFilters] = useState({
         search: '',
@@ -63,8 +66,18 @@ export default function Home() {
     };
 
     const handleDelete = (id: string) => {
-        if (confirm('Deseja realmente remover este empreendimento do radar?')) {
-            deleteMutation.mutate(id);
+        setEnterpriseToDelete(id);
+        setIsDeleteModalOpen(true);
+    };
+
+    const confirmDelete = () => {
+        if (enterpriseToDelete) {
+            deleteMutation.mutate(enterpriseToDelete, {
+                onSuccess: () => {
+                    setIsDeleteModalOpen(false);
+                    setEnterpriseToDelete(null);
+                }
+            });
         }
     };
 
@@ -185,6 +198,18 @@ export default function Home() {
                 initialData={editingEnterprise}
                 onSubmit={handleFormSubmit}
                 isSubmitting={createMutation.isPending || updateMutation.isPending}
+            />
+
+            <ConfirmModal
+                isOpen={isDeleteModalOpen}
+                onClose={() => setIsDeleteModalOpen(false)}
+                onConfirm={confirmDelete}
+                title="Confirmar Exclusão"
+                message="Deseja realmente remover este empreendimento do radar? Esta ação não pode ser desfeita."
+                confirmText="Excluir Agora"
+                cancelText="Manter Registro"
+                variant="destructive"
+                isLoading={deleteMutation.isPending}
             />
         </div>
     );

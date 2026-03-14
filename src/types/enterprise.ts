@@ -26,7 +26,7 @@ export const enterpriseSchema = z.object({
   isActive: z.boolean(),
 
   // Opcionais
-  foundationYear: z.number().int().min(1900).max(new Date().getFullYear()).optional(),
+  foundationDate: z.string().optional(),
   website: z.string().url('URL inválida.').optional().or(z.literal('')),
   employeeCount: z.number().int().min(0).optional(),
   description: z.string().max(500, 'A descrição não pode ter mais de 500 caracteres.').optional(),

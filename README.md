@@ -33,7 +33,8 @@ O foco do projeto vai além do CRUD básico: a interface apresenta animações d
 - **Cadastro** de novos empreendimentos via modal com validação em tempo real
 - **Listagem** em tabela com nome, empreendedor, município, segmento, status e website
 - **Edição** de registros existentes com pré-preenchimento automático do formulário
-- **Exclusão** com confirmação explícita do usuário
+- **Exclusão** precedida de modal de confirmação explícita, impedindo remoções acidentais
+- **Feedback imediato** após cada operação: toast de sucesso (verde/lime) ou de erro (vermelho), com auto-dismiss em 5 segundos e barra de progresso animada
 
 ### Campos do Cadastro
 
@@ -46,7 +47,7 @@ O foco do projeto vai além do CRUD básico: a interface apresenta animações d
 | Contato | Texto | Obrigatório | E-mail ou telefone (mínimo 5 caracteres) |
 | Status (Ativo) | Booleano | Obrigatório | Padrão: ativo |
 | Website | URL | Opcional | Validação de formato de URL |
-| Ano de Fundação | Número | Opcional | Entre 1900 e o ano atual |
+| Data de Fundação | DatePicker | Opcional | Seleção de dia, mês e ano; armazenado em ISO 8601 (`YYYY-MM-DD`) |
 | Número de Funcionários | Número | Opcional | — |
 | Descrição | Textarea | Opcional | Máximo 500 caracteres |
 
@@ -74,6 +75,9 @@ O foco do projeto vai além do CRUD básico: a interface apresenta animações d
 - Animações de entrada e hover com Framer Motion
 - Navegação sticky com indicador de seção ativa via `IntersectionObserver`
 - Autocomplete de cidade com normalização Unicode NFD (busca ignora acentos) e suporte a teclado (↑ ↓ Enter Esc)
+- DatePicker customizado com seleção de dia, mês e ano — popup via React Portal (evita clipping de `overflow`), reposicionamento automático em scroll/resize e grade de seleção de ano
+- Modal de confirmação de exclusão com variantes visuais (destructive/warning/info), estado de carregamento e fechamento via Esc ou clique no backdrop
+- Notificações toast animadas (Framer Motion) com variantes de sucesso e erro, fechamento manual e barra de progresso de auto-dismiss
 
 ---
 
@@ -120,9 +124,12 @@ sc-startup-radar/
 │   │
 │   ├── components/
 │   │   ├── Dashboard.tsx       # Cards de métricas e distribuição por segmento
+│   │   ├── DatePicker.tsx      # DatePicker customizado com portal, navegação por mês/ano e teclado
 │   │   ├── EnterpriseForm.tsx  # Modal de criação/edição com autocomplete e validação Zod
 │   │   ├── EnterpriseTable.tsx # Tabela de listagem com ações de edição e exclusão
 │   │   ├── Filters.tsx         # Barra de busca, selects de filtro e botão "Novo Registro"
+│   │   ├── Modal.tsx           # Componente base de modal (backdrop blur, Esc, animação de entrada/saída)
+│   │   ├── ConfirmModal.tsx    # Modal de confirmação de exclusão com variantes e estado de loading
 │   │   └── Navbar.tsx          # Navegação sticky com IntersectionObserver
 │   │
 │   ├── types/
@@ -132,8 +139,9 @@ sc-startup-radar/
 │   │   └── storage.ts          # Camada de dados: CRUD assíncrono sobre localStorage
 │   │
 │   ├── hooks/
-│   │   └── useEnterprises.ts   # Hooks React Query: useEnterprises, useCreateEnterprise,
-│   │                           #   useUpdateEnterprise, useDeleteEnterprise
+│   │   ├── useEnterprises.ts   # Hooks React Query: useEnterprises, useCreateEnterprise,
+│   │   │                       #   useUpdateEnterprise, useDeleteEnterprise
+│   │   └── useToast.tsx        # Provider e hook do sistema de notificações toast
 │   │
 │   ├── data/
 │   │   └── sc-cities.ts        # Array estático com os 295 municípios de Santa Catarina
