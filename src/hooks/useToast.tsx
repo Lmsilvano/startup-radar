@@ -42,7 +42,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
         <ToastContext.Provider value={{ success, error }}>
             {children}
             <div className="fixed bottom-6 right-6 z-[200] flex flex-col gap-3 w-full max-w-sm pointer-events-none">
-                <AnimatePresence mode="multiple">
+                <AnimatePresence mode="popLayout">
                     {toasts.map((toast) => (
                         <ToastComponent
                             key={toast.id}

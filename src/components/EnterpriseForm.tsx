@@ -1,4 +1,4 @@
-import { useForm, Controller } from "react-hook-form";
+import { useForm, useController } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { enterpriseSchema, Enterprise, Segment } from "@/types/enterprise";
 import { X, Save, AlertCircle, Info, MapPin } from "lucide-react";
@@ -47,6 +47,8 @@ export function EnterpriseForm({ initialData, isOpen, onClose, onSubmit, isSubmi
             });
         }
     }, [initialData, reset, isOpen]);
+
+    const { field: foundationDateField } = useController({ name: "foundationDate", control });
 
     const [suggestions, setSuggestions] = useState<string[]>([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
@@ -275,16 +277,10 @@ export function EnterpriseForm({ initialData, isOpen, onClose, onSubmit, isSubmi
                                         <input {...register("website")} className={formInputClass} placeholder="https://..." />
                                     </FormField>
                                     <FormField label="Data de Fundação">
-                                        <Controller
-                                            name="foundationDate"
-                                            control={control}
-                                            render={({ field }) => (
-                                                <DatePicker
-                                                    value={field.value}
-                                                    onChange={field.onChange}
-                                                    placeholder="DD/MM/AAAA"
-                                                />
-                                            )}
+                                        <DatePicker
+                                            value={foundationDateField.value}
+                                            onChange={foundationDateField.onChange}
+                                            placeholder="DD/MM/AAAA"
                                         />
                                     </FormField>
                                 </div>
