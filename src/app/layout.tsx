@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import { Navbar } from "@/components/Navbar";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -44,12 +45,7 @@ export default function RootLayout({
                                         Startup <span className="text-primary italic">Radar</span>
                                     </h1>
                                 </div>
-                                <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-muted-foreground">
-                                    <a href="#dashboard" className="hover:text-primary transition-colors">Métricas</a>
-                                    <a href="#listing" className="hover:text-primary transition-colors">Diretório</a>
-                                    <div className="h-4 w-[1px] bg-border mx-2" />
-                                    <span className="text-[10px] uppercase tracking-widest font-bold opacity-50">SC Innovation Index</span>
-                                </nav>
+                                <Navbar />
                                 <div className="md:hidden w-8 h-8 flex items-center justify-center rounded-md border bg-muted/50">
                                     <div className="w-4 h-[2px] bg-foreground relative after:content-[''] after:absolute after:top-[-6px] after:w-4 after:h-[2px] after:bg-foreground before:content-[''] before:absolute before:top-[6px] before:w-4 before:h-[2px] before:bg-foreground" />
                                 </div>

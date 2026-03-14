@@ -112,12 +112,26 @@ export default function Home() {
                 className="space-y-24"
             >
                 {/* Dashboard Section */}
-                <section id="dashboard" className="scroll-mt-24">
+                <motion.section
+                    id="dashboard"
+                    className="scroll-mt-24"
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                >
                     <Dashboard enterprises={enterprises} isLoading={isLoading} />
-                </section>
+                </motion.section>
 
                 {/* Listing Section */}
-                <section id="listing" className="space-y-10 px-4 md:px-8">
+                <motion.section
+                    id="listing"
+                    className="space-y-10 px-4 md:px-8 scroll-mt-24"
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+                >
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b pb-8">
                         <div>
                             <h2 className="text-3xl font-bold tracking-tighter">
@@ -147,7 +161,7 @@ export default function Home() {
                             onDelete={handleDelete}
                         />
                     </div>
-                </section>
+                </motion.section>
             </motion.div>
 
             {/* Smooth Footer Info */}

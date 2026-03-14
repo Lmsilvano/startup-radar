@@ -40,6 +40,7 @@
 
 @layer base {
   :root {
+    scroll-behavior: smooth;
     --background: #fdfdfd;
     --foreground: #09090b;
     --card: #ffffff;
