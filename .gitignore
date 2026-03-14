@@ -37,4 +37,6 @@ logs/
 CLAUDE.md
 
 # Application specific
-sc_cities*.txt
+
+# Vercel
+.vercel
