@@ -267,7 +267,7 @@ Por utilizar `localStorage` como mecanismo de persistência, os dados ficam arma
 
 > O link para o vídeo pitch será disponibilizado após a gravação e publicação.
 
-**Acesse em:** `[link do vídeo pitch — será inserido após gravação e publicação]`
+**Acesse em:** [link do vídeo pitch](https://youtu.be/ASpOPAI6AqQ)
 
 ---
 
